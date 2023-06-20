@@ -2,54 +2,46 @@
 
 pragma solidity >=0.8.2 <0.9.0;
 contract Storage {
-    string name;
-    string [5] editor;
-    string [10] viewer;
+    string public name;
+    mapping(address => bool) private editor;
     string [20] scripts;
+    address private owner;
 
-    function exist(string user) private return (bool){
-        for (uint i=0; i<5; i++){
-            if (editor[i] == user){
-                return true;
-            }
-        }
-        return false;
+    modifier onlyAuthorized() {
+        require(isAuthorized(msg.sender), "Unauthorized access");
+        _;
+    }
+
+    constructor() {
+        owner = msg.sender;  // Set the contract creator as the owner
+        editor[owner] = true;  // Add the owner to the authorized list
+    }
+
+    function addAuthorizedAddress(address _address) public onlyAuthorized {
+        editor[_address] = true;
+    }
+
+    function removeAuthorizedAddress(address _address) public onlyAuthorized {
+        editor[_address] = false;
+    }
+
+    function isAuthorized(address _address) public view returns (bool) {
+        return editor[_address];
     }
     
-    function changeName(string currentUser, string newName) public {
-        require(exist(currentUser), "you cannot edit")
+    function changeName(string memory newName) public onlyAuthorized {
         name = newName;
     }
-    function getName() public view returns (string){
+
+    function getName() public view returns (string memory){
         return name;
     }
-    function newEditor(string currentUser, string id) public {
-        require(exist(id) == false, "user is already an editor");
-        require(editor.length < 6, "editors cannot exceed 5");
-        require(exist(currentUser) || editor.length == 0, "you cannot edit");
-        editor.push(id); 
-    }
 
-    function getEditor(uint256 num) public view returns (string){
-        return editor[num];
-    }
-
-    function newViewer(string currentUser, string id) public {
-        require(exist(currentUser), "you cannot edit");
-        require(viewer < 11, "viewers cannot exceed 10");
-        viewer.push(id);
-    }
-
-    function getViewer(uint256 num) public view returns (string){
-        return viewer[num];
-    }
-
-    function store(string currentUser, uint256 num, string text) public {
-        require(exist(currentUser), "you cannot edit");
+    function store(uint256 num, string memory text) public onlyAuthorized{
         scripts[num] = text;
     }
 
-    function retrieve(uint256 num) public view returns (string){
+    function retrieve(uint256 num) public view returns (string memory){
         return scripts[num];
     }
 }

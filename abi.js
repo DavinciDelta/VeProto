@@ -1,11 +1,24 @@
 export const ABI = [
 	{
+		"inputs": [],
+		"stateMutability": "nonpayable",
+		"type": "constructor"
+	},
+	{
 		"inputs": [
 			{
-				"internalType": "string",
-				"name": "currentUser",
-				"type": "string"
-			},
+				"internalType": "address",
+				"name": "_address",
+				"type": "address"
+			}
+		],
+		"name": "addAuthorizedAddress",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
 			{
 				"internalType": "string",
 				"name": "newName",
@@ -15,97 +28,6 @@ export const ABI = [
 		"name": "changeName",
 		"outputs": [],
 		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "string",
-				"name": "currentUser",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "id",
-				"type": "string"
-			}
-		],
-		"name": "newEditor",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "string",
-				"name": "currentUser",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "id",
-				"type": "string"
-			}
-		],
-		"name": "newViewer",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "string",
-				"name": "currentUser",
-				"type": "string"
-			}
-		],
-		"name": "start",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "string",
-				"name": "currentUser",
-				"type": "string"
-			},
-			{
-				"internalType": "uint256",
-				"name": "num",
-				"type": "uint256"
-			},
-			{
-				"internalType": "string",
-				"name": "text",
-				"type": "string"
-			}
-		],
-		"name": "store",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "num",
-				"type": "uint256"
-			}
-		],
-		"name": "getEditor",
-		"outputs": [
-			{
-				"internalType": "string",
-				"name": "",
-				"type": "string"
-			}
-		],
-		"stateMutability": "view",
 		"type": "function"
 	},
 	{
@@ -124,17 +46,17 @@ export const ABI = [
 	{
 		"inputs": [
 			{
-				"internalType": "uint256",
-				"name": "num",
-				"type": "uint256"
+				"internalType": "address",
+				"name": "_address",
+				"type": "address"
 			}
 		],
-		"name": "getViewer",
+		"name": "isAuthorized",
 		"outputs": [
 			{
-				"internalType": "string",
+				"internalType": "bool",
 				"name": "",
-				"type": "string"
+				"type": "bool"
 			}
 		],
 		"stateMutability": "view",
@@ -156,6 +78,19 @@ export const ABI = [
 	{
 		"inputs": [
 			{
+				"internalType": "address",
+				"name": "_address",
+				"type": "address"
+			}
+		],
+		"name": "removeAuthorizedAddress",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
 				"internalType": "uint256",
 				"name": "num",
 				"type": "uint256"
@@ -170,6 +105,24 @@ export const ABI = [
 			}
 		],
 		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "num",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "text",
+				"type": "string"
+			}
+		],
+		"name": "store",
+		"outputs": [],
+		"stateMutability": "nonpayable",
 		"type": "function"
 	}
 ]

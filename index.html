@@ -10,12 +10,12 @@
 </head>
 
 <body>
-  <p class="text-3xl mt-8 text-center text-green-500">My Storage DApp</p>
+  <p class="text-3xl mt-8 text-center text-green-500">Contract testing</p>
 
   <div class="flex mt-8 items-center justify-center" id="login-body">
 
     <button class="py-2 px-4 rounded bg-blue-400 text-white hover:bg-blue-500 transition duration-500"
-      id="login-btn">Login</button>
+      id="login-btn">Log in</button>
 
   </div>
 
@@ -26,12 +26,6 @@
       <div class="flex flex-col justify-between max-w-screen-sm mx-auto space-x-4">
 
           <div class="flex flex-col items-center space-y-4 bg-rose-300 p-8 rounded-lg w-full">
-              <p class="text-xl font-semibold">Start</p>
-              <input class="border border-gray-200 focus:outline-none p-2 rounded text-center" placeholder="Start" id="start-input">
-              <button class="px-2 py-1 rounded bg-blue-400 hover:bg-blue-500 text-white" id="start-btn">Start</button>
-          </div>
-
-          <div class="flex flex-col items-center space-y-4 bg-rose-300 p-8 rounded-lg w-full">
               <p class="text-xl font-semibold">Set Name</p>
               <input class="border border-gray-200 focus:outline-none p-2 rounded text-center" placeholder="Set Name" id="setName-input">
               <button class="px-2 py-1 rounded bg-blue-400 hover:bg-blue-500 text-white" id="setName-btn">Set Name</button>
@@ -39,19 +33,26 @@
 
           <div class="flex flex-col items-center space-y-4 bg-rose-300 p-8 rounded-lg w-full">
               <p class="text-xl font-semibold">Set New Editor</p>
-              <input class="border border-gray-200 focus:outline-none p-2 rounded text-center" placeholder="Set New Editor" id="setEdit-input">
-              <button class="px-2 py-1 rounded bg-blue-400 hover:bg-blue-500 text-white" id="setEdit-btn">Set New Editor</button>
+              <input class="border border-gray-200 focus:outline-none p-2 rounded text-center" placeholder="Set New Editor" id="setEditor-input">
+              <button class="px-2 py-1 rounded bg-blue-400 hover:bg-blue-500 text-white" id="setEditor-btn">Set New Editor</button>
           </div>
+
           <div class="flex flex-col items-center space-y-4 bg-rose-300 p-8 rounded-lg w-full">
-              <p class="text-xl font-semibold">Set New Viewer</p>
-              <input class="border border-gray-200 focus:outline-none p-2 rounded text-center" placeholder="Set New Viewer" id="setViewer-input">
-              <button class="px-2 py-1 rounded bg-blue-400 hover:bg-blue-500 text-white" id="setView-btn">Set New Viewer</button>
+            <p class="text-xl font-semibold">Write</p>
+            <input class="border border-gray-200 focus:outline-none p-2 rounded text-center" placeholder="Write" id="write-input">
+            <button class="px-2 py-1 rounded bg-blue-400 hover:bg-blue-500 text-white" id="write-btn">Write</button>
+        </div>
+
+          <div class="flex flex-col items-center space-y-4 bg-emerald-300 p-8 rounded-lg w-full">
+              <p class="text-xl font-semibold">Read</p>
+              <button class="px-2 py-1 rounded bg-blue-400 hover:bg-blue-500 text-white" id="read-btn">Read the Paragraphs</button>
+              <div>Current Information: <span class="font-semibold" id="read"></span></div>
           </div>
 
           <div class="flex flex-col items-center space-y-4 bg-emerald-300 p-8 rounded-lg w-full">
               <p class="text-xl font-semibold">Editors</p>
-              <button class="px-2 py-1 rounded bg-blue-400 hover:bg-blue-500 text-white" id="getEditor-btn">Get Editors</button>
-              <div>The editors are: <span class="font-semibold" id="getEditor"></span></div>
+              <button class="px-2 py-1 rounded bg-blue-400 hover:bg-blue-500 text-white" id="getEditor-btn">Is Editor?</button>
+              <div>Editor true/false?: <span class="font-semibold" id="getEditor"></span></div>
           </div>
 
           <div class="flex flex-col items-center space-y-4 bg-blue-300 p-8 rounded-lg w-full">
