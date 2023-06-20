@@ -1,5 +1,5 @@
 import { ABI } from './abi'
-const contract = '0x91E70f0d192199363E74FDc5A6549A35CCc67B04'
+const contract = '0xE62923c5E7c6D63f299a4319B471940B0e94eE58'
 
 const connex = new Connex({
   node: 'https://vethor-node-test.vechaindev.com',
@@ -45,11 +45,7 @@ setNamebtn.onclick = async () => {
             const setNameABI = ABI.find(({ name }) => name === 'changeName');
 
             const clause = connex.thor.account(contract).method(setNameABI).asClause(tempName);
-            try{
-                const result = await connex.vendor.sign("tx", [clause]).comment("setting name").request();
-            } catch (error){
-              console.log(error.message);
-            }
+            const result = await connex.vendor.sign("tx", [clause]).comment("setting name").request();
             alert("transaction done: ", result.txid);
 
         }
@@ -71,11 +67,7 @@ setEditorbtn.onclick = async () => {
             const setEditorABI = ABI.find(({ name }) => name === 'addAuthorizedAddress');
 
             const clause = connex.thor.account(contract).method(setEditorABI).asClause(tempAddress);
-            try{
-                const result = await connex.vendor.sign("tx", [clause]).comment("setting editor").request();
-            } catch (error){
-              console.log(error.message);
-            }
+            const result = await connex.vendor.sign("tx", [clause]).comment("setting editor").request();
             alert("transaction done: ", result.txid);
 
         }
@@ -96,12 +88,8 @@ writebtn.onclick = async () => {
         if (tempInfo.length > 0) {
             const writeABI = ABI.find(({ name }) => name === 'store');
 
-            const clause = connex.thor.account(contract).method(writeABI).asClause([0, tempInfo]);
-            try{
-                const result = await connex.vendor.sign("tx", [clause]).comment("writing info").request();
-            } catch (error){
-              console.log(error.message);
-            }
+            const clause = connex.thor.account(contract).method(writeABI).asClause(0, tempInfo);
+            const result = await connex.vendor.sign("tx", [clause]).comment("writing info").request();
             alert("transaction done: ", result.txid);
 
         }
@@ -114,6 +102,23 @@ writebtn.onclick = async () => {
     }
 }
 
+var getNamebtn = document.querySelector('#getName-btn');
+
+getNamebtn.onclick = async () => {
+    const current = document.querySelector('#getName');
+    const getNameABI = ABI.find(({ name }) => name === "getName");
+
+    current.innerHTML = 'reading';
+
+    const result = await connex.thor.account(contract).method(getNameABI).call();
+
+    if (result) {
+      current.innerHTML = result.decoded[0];
+    }
+    else {
+      current.innerHTML = 'failed to get';
+    }
+}
 
 var readbtn = document.querySelector('#read-btn');
 
@@ -123,7 +128,7 @@ readbtn.onclick = async () => {
 
     current.innerHTML = 'reading';
 
-    const result = await connex.thor.account(contract).method(readABI).asClause(0).call();
+    const result = await connex.thor.account(contract).method(readABI).call(0);
 
     if (result) {
       current.innerHTML = result.decoded[0];
@@ -137,11 +142,11 @@ var getEditorbtn = document.querySelector('#getEditor-btn');
 
 getEditorbtn.onclick = async () => {
     const current = document.querySelector('#getEditor');
-    const getEditorABI = ABI.find(({ name }) => name === "getEditor");
+    const getEditorABI = ABI.find(({ name }) => name === "isAuthorized");
 
     current.innerHTML = 'reading';
 
-    const result = await connex.thor.account(contract).method(getEditorABI).asClause(useraddress).call();
+    const result = await connex.thor.account(contract).method(getEditorABI).call(useraddress);
 
     if (result) {
       current.innerHTML = result.decoded[0];
