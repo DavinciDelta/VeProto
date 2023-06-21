@@ -63,7 +63,7 @@ var setEditorbtn = document.querySelector('#setEditor-btn');
 setEditorbtn.onclick = async () => {
     if (userlogin) {
         const tempAddress = document.querySelector('#setEditor-input').value
-        if (tempName.length > 0) {
+        if (tempAddress.length > 0) {
             const setEditorABI = ABI.find(({ name }) => name === 'addAuthorizedAddress');
 
             const clause = connex.thor.account(contract).method(setEditorABI).asClause(tempAddress);
