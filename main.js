@@ -1,5 +1,4 @@
 import { ABI } from './abi'
-import dataJson from './data.json'
 const contract = '0x1d270c0c82c215e4b0ceae5b68a7daf4f049a7f8'
 
 const connex = new Connex({
