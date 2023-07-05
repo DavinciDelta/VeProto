@@ -7,6 +7,7 @@
   <title>Vite App</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/@vechain/connex@2"></script>
+  <script type="text/javascript" src="data.json"></script>
 </head>
 
 <body>
@@ -22,9 +23,43 @@
 
   <div class="hidden" id="dapp-body">
 
-      <div class="flex justify-center my-8">User address : <span id="user-address"></span></div>
+      <div class="flex justify-center my-8">User address: <span id="user-address"></span></div>
+      <div class="flex flex-col justify-between max-w-screen-sm mx-auto space-x-4">
+      <br>
+      <div class="flex justify-center my-8">Number of transactions in this contract: <span id="count-details"></span></div>
+      <div class="flex flex-col justify-between max-w-screen-sm mx-auto space-x-4">
+      <br>
+      <div class="flex justify-center my-8">First transaction ID: <span id="user-details"></span></div>
       <div class="flex flex-col justify-between max-w-screen-sm mx-auto space-x-4">
 
+          <div class="flex flex-col items-center space-y-4 bg-rose-300 p-8 rounded-lg w-full">
+              <p class="text-xl font-semibold">Select Paragraph(1-20)</p>
+              <input class="border border-gray-200 focus:outline-none p-2 rounded text-center" placeholder="Select which paragraph" id="number-input">
+          </div>
+          <div class="flex flex-col items-center space-y-4 bg-rose-300 p-8 rounded-lg w-full">
+            <p class="text-xl font-semibold">Write Paragraph</p>
+            <input class="border border-gray-200 focus:outline-none p-2 rounded text-center" placeholder="Enter your content here" id="write-input">
+            <button class="px-2 py-1 rounded bg-blue-400 hover:bg-blue-500 text-white" id="write-btn">Write</button>
+          </div>
+          <div class="flex flex-col items-center space-y-4 bg-rose-300 p-8 rounded-lg w-full" style="height: 550px;">
+            <p class="text-xl font-semibold">Proposal</p>
+            <button class="px-2 py-1 rounded bg-blue-400 hover:bg-blue-500 text-white" id="reload-btn">Reload</button>
+            <div>Current Proposal Index(100 means no proposals): <span class="font-semibold" id="currentIndex"></span></div>
+            <div>Current Proposal: <span class="font-semibold" id="currentProposal"></span></div>
+            <div>Proposer: <span class="font-semibold" id="currentProposer"></span></div>
+            <div>Current Votes: <span class="font-semibold" id="currentIndex"></span></div>
+            <div>Yes Votes: <span class="font-semibold" id="yesVotes"></span></div>
+            <div>No Votes: <span class="font-semibold" id="noVotes"></span></div>
+            <div>Required Votes: <span class="font-semibold" id="requiredVotes"></span></div>
+            <div>Have you voted? <span class="font-semibold" id="checkVoted"></span></div>
+            <button class="px-2 py-1 rounded bg-blue-400 hover:bg-blue-500 text-white" id="yes-btn">Vote Yes</button>
+            <button class="px-2 py-1 rounded bg-blue-400 hover:bg-blue-500 text-white" id="no-btn">Vote No</button>
+          </div>
+          <div class="flex flex-col items-center space-y-4 bg-emerald-300 p-8 rounded-lg w-full">
+            <p class="text-xl font-semibold">Read</p>
+            <button class="px-2 py-1 rounded bg-blue-400 hover:bg-blue-500 text-white" id="read-btn">Read the Paragraphs</button>
+            <div>Current Information: <span class="font-semibold" id="read"></span></div>
+          </div>
           <div class="flex flex-col items-center space-y-4 bg-rose-300 p-8 rounded-lg w-full">
               <p class="text-xl font-semibold">Set Name</p>
               <input class="border border-gray-200 focus:outline-none p-2 rounded text-center" placeholder="Set Name" id="setName-input">
@@ -35,18 +70,6 @@
               <p class="text-xl font-semibold">Set New Editor</p>
               <input class="border border-gray-200 focus:outline-none p-2 rounded text-center" placeholder="Set New Editor" id="setEditor-input">
               <button class="px-2 py-1 rounded bg-blue-400 hover:bg-blue-500 text-white" id="setEditor-btn">Set New Editor</button>
-          </div>
-
-          <div class="flex flex-col items-center space-y-4 bg-rose-300 p-8 rounded-lg w-full">
-            <p class="text-xl font-semibold">Write</p>
-            <input class="border border-gray-200 focus:outline-none p-2 rounded text-center" placeholder="Write" id="write-input">
-            <button class="px-2 py-1 rounded bg-blue-400 hover:bg-blue-500 text-white" id="write-btn">Write</button>
-        </div>
-
-          <div class="flex flex-col items-center space-y-4 bg-emerald-300 p-8 rounded-lg w-full">
-              <p class="text-xl font-semibold">Read</p>
-              <button class="px-2 py-1 rounded bg-blue-400 hover:bg-blue-500 text-white" id="read-btn">Read the Paragraphs</button>
-              <div>Current Information: <span class="font-semibold" id="read"></span></div>
           </div>
           <div class="flex flex-col items-center space-y-4 bg-emerald-300 p-8 rounded-lg w-full">
               <p class="text-xl font-semibold">Get Name</p>

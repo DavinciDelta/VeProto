@@ -1,5 +1,6 @@
 import { ABI } from './abi'
-const contract = '0xE62923c5E7c6D63f299a4319B471940B0e94eE58'
+import dataJson from './data.json'
+const contract = '0x1d270c0c82c215e4b0ceae5b68a7daf4f049a7f8'
 
 const connex = new Connex({
   node: 'https://vethor-node-test.vechaindev.com',
@@ -27,7 +28,8 @@ loginbtn.onclick = async () => {
     document.querySelector('#login-body').className = 'hidden'
     document.querySelector('#dapp-body').classList.remove('hidden')
     document.querySelector('#user-address').innerHTML = useraddress
-
+    document.querySelector('#count-details').innerHTML = dataJson.count
+    document.querySelector('#user-details').innerHTML = dataJson.txs[0].txID
     userlogin = true
   }
   else {
@@ -85,20 +87,148 @@ var writebtn = document.querySelector('#write-btn');
 writebtn.onclick = async () => {
     if (userlogin) {
         const tempInfo = document.querySelector('#write-input').value
+        const tempNumber = document.querySelector('#number-input').value
         if (tempInfo.length > 0) {
-            const writeABI = ABI.find(({ name }) => name === 'store');
+            if(tempNumber.length > 0){
+                const writeABI = ABI.find(({ name }) => name === 'store');
 
-            const clause = connex.thor.account(contract).method(writeABI).asClause(0, tempInfo);
-            const result = await connex.vendor.sign("tx", [clause]).comment("writing info").request();
-            alert("transaction done: ", result.txid);
+                const clause = connex.thor.account(contract).method(writeABI).asClause(tempNumber, tempInfo);
+                const result = await connex.vendor.sign("tx", [clause]).comment("writing info").request();
+                alert("transaction done: ", result.txid);
+            }
+            else{
+              alert("Enter the Paragraph number")
+            }
 
         }
         else {
-            alert("Write something into the box");
+            alert("Write something into the paragraph");
         }
     }
     else {
         alert("User not logged in");
+    }
+}
+
+var reloadbtn = document.querySelector('#reload-btn');
+
+reloadbtn.onclick = async () => {
+    const currentIndex = document.querySelector('#currentIndex');
+    const currentProposal = document.querySelector('#currentProposal');
+    const currentProposer = document.querySelector('#currentProposer');
+    const yesVotes = document.querySelector('#yesVotes');
+    const noVotes = document.querySelector('#noVotes');
+    const requiredVotes = document.querySelector('#requiredVotes');
+    const checkVoted = document.querySelector('#checkVoted');
+    
+
+    const indexABI = ABI.find(({ name }) => name === "getProposalIndex");
+    const contentABI = ABI.find(({ name }) => name === "getProposal");
+    const proposerABI = ABI.find(({ name }) => name === "getProposer");
+    const yesABI = ABI.find(({ name }) => name === "getForVotes");
+    const noABI = ABI.find(({ name }) => name === "getNoVotes");
+    const requiredABI = ABI.find(({ name }) => name === "getRequiredVotes");
+    const checkVotedABI = ABI.find(({ name }) => name === "hasVoted");
+    currentIndex.innerHTML = 'reading';
+
+    const result1 = await connex.thor.account(contract).method(indexABI).call();
+    const result2 = await connex.thor.account(contract).method(contentABI).call();
+    const result3 = await connex.thor.account(contract).method(proposerABI).call();
+    const yesResult = await connex.thor.account(contract).method(yesABI).call();
+    const noResult = await connex.thor.account(contract).method(noABI).call();
+    const reqResult = await connex.thor.account(contract).method(requiredABI).call();
+    const checkVoteResult = await connex.thor.account(contract).method(checkVotedABI).call(useraddress);
+
+    if (result1) {
+        currentIndex.innerHTML = result1.decoded[0];
+    }
+    else{
+        currentIndex.innerHTML = "failed to get";
+    }
+    if(result2){
+        currentProposal.innerHTML = result2.decoded[0];
+    }
+    else{
+        currentProposal.innerHTML = "failed to get";
+    }
+    if (yesResult) {
+        yesVotes.innerHTML = yesResult.decoded[0];
+    }
+    else{
+        yesVotes.innerHTML = "failed to get";
+    }
+    if (noResult) {
+        noVotes.innerHTML = noResult.decoded[0];
+    }
+    else{
+        noVotes.innerHTML = "failed to get";
+    }
+    if (reqResult) {
+        requiredVotes.innerHTML = reqResult.decoded[0];
+    }
+    else{
+        requiredVotes.innerHTML = "failed to get";
+    }
+    if (checkVoteResult) {
+        checkVoted.innerHTML = checkVoteResult.decoded[0];
+    }
+    else{
+        checkVoted.innerHTML = "failed to get";
+    }
+    if(result3){
+        currentProposer.innerHTML = result3.decoded[0];
+    }
+    else{
+        currentProposer.innerHTML = "failed to get";
+    }
+    
+  
+    
+}
+
+var yesbtn = document.querySelector('#yes-btn');
+
+yesbtn.onclick = async () => {
+    const current = document.querySelector('#yesVotes');
+    const voteYesABI = ABI.find(({ name }) => name === "voteFor");
+
+    current.innerHTML = 'updating';
+
+    const result = await connex.thor.account(contract).method(voteYesABI).call();
+
+    if (result) {
+      current.innerHTML = 'vote successful';
+      const yesABI = ABI.find(({ name }) => name === "getForVotes");
+      const yesResult = await connex.thor.account(contract).method(yesABI).call();
+      if (yesResult) {
+        current.innerHTML = yesResult.decoded[0];
+      }
+    }
+    else {
+      current.innerHTML = 'failed to get';
+    }
+}
+
+var nobtn = document.querySelector('#no-btn');
+
+nobtn.onclick = async () => {
+    const current = document.querySelector('#noVotes');
+    const voteNoABI = ABI.find(({ name }) => name === "voteNo");
+
+    current.innerHTML = 'updating';
+
+    const result = await connex.thor.account(contract).method(voteNoABI).call();
+
+    if (result) {
+      current.innerHTML = 'vote successful';
+      const noABI = ABI.find(({ name }) => name === "getNoVotes");
+      const noResult = await connex.thor.account(contract).method(noABI).call();
+      if (noResult) {
+          current.innerHTML = noResult.decoded[0];
+      }
+    }
+    else {
+      current.innerHTML = 'failed to get';
     }
 }
 
@@ -129,13 +259,17 @@ readbtn.onclick = async () => {
     current.innerHTML = 'reading';
 
     const result = await connex.thor.account(contract).method(readABI).call(0);
-
+    const result2 = await connex.thor.account(contract).method(readABI).call(1);
     if (result) {
-      current.innerHTML = result.decoded[0];
+        current.innerHTML = result.decoded[0];
+        if(result2){
+          current.innerHTML += "<br/>" + result2.decoded[0];
+        }
     }
-    else {
-      current.innerHTML = 'failed to get';
+    else{
+        current.innerHTML = "failed to get";
     }
+    
 }
 
 var getEditorbtn = document.querySelector('#getEditor-btn');
