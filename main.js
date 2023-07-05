@@ -28,8 +28,6 @@ loginbtn.onclick = async () => {
     document.querySelector('#login-body').className = 'hidden'
     document.querySelector('#dapp-body').classList.remove('hidden')
     document.querySelector('#user-address').innerHTML = useraddress
-    document.querySelector('#count-details').innerHTML = dataJson.count
-    document.querySelector('#user-details').innerHTML = dataJson.txs[0].txID
     userlogin = true
   }
   else {
