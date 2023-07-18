@@ -11,32 +11,66 @@
 
 <body>
   <p class="text-3xl mt-8 text-center text-green-500">Contract testing</p>
+  <div class="main" id="dapp-body">
 
-  <div class="flex mt-8 items-center justify-center" id="login-body">
-
-    <button class="py-2 px-4 rounded bg-blue-400 text-white hover:bg-blue-500 transition duration-500"
-      id="login-btn">Log in</button>
-
-  </div>
-
-
-  <div class="hidden" id="dapp-body">
-
-      <div class="flex justify-center my-8">User address: <span id="user-address"></span></div>
-      <div class="flex flex-col justify-between max-w-screen-sm mx-auto space-x-4">
+      <div class="flex justify-center my-4">User address: 0x74DA1548fDc9Af05869193e775340192478a6365  ////////// Password: Password</div>
+      <div class="flex justify-center my-4">Memo Words: hotel copy build coast inmate awkward certain addict copper indicate myself decline</div>
+      <div class="flex flex-col justify-between max-w-screen-lg mx-auto space-x-4">
       <br>
+          <div class = "flex">
+              <div class="flex flex-col items-center space-y-4 bg-emerald-300 p-8 rounded-lg w-1/4">
+                  <p class="text-xl font-semibold">Get Name</p>
+                  <button class="px-2 py-1 rounded bg-blue-400 hover:bg-blue-500 text-white" id="getName-btn">Get Name</button>
+                  <div>Name: <span class="font-semibold" id="getName"></span></div>
+              </div>
+              <div class="flex flex-col items-center space-y-4 bg-emerald-300 p-8 rounded-lg w-1/4">
+                  <p class="text-xl font-semibold">Get Description</p>
+                  <button class="px-2 py-1 rounded bg-blue-400 hover:bg-blue-500 text-white" id="getDes-btn">Get!</button>
+                  <div>Description: <span class="font-semibold" id="getDes"></span></div>
+              </div>
+              <div class="flex flex-col items-center space-y-4 bg-emerald-300 p-8 rounded-lg w-1/4">
+                <p class="text-xl font-semibold">R u Editor?</p>
+                <button class="px-2 py-1 rounded bg-blue-400 hover:bg-blue-500 text-white" id="getEditor-btn">Check</button>
+                <div>Editor true/false?: <span class="font-semibold" id="getEditor"></span></div>
+              </div>
+              <div class="flex flex-col items-center space-y-4 bg-emerald-300 p-8 rounded-lg w-1/4">
+                <p class="text-xl font-semibold">Get Type</p>
+                <button class="px-2 py-1 rounded bg-blue-400 hover:bg-blue-500 text-white" id="getType-btn">Check</button>
+                <div>Type: <span class="font-semibold" id="getType"></span></div>
+              </div>
+          </div>
+          <div class = "flex">
+              <div class="flex flex-col items-center space-y-4 bg-emerald-300 p-8 rounded-lg w-1/2">
+                  <p class="text-xl font-semibold">Read Clause</p>
+                  <div class = "flex space-x-2">
+                      <input class="border border-gray-200 focus:outline-none p-2 rounded text-center w-24" placeholder="number" id="read-input">
+                      <button class="px-2 py-1 rounded bg-blue-400 hover:bg-blue-500 text-white" id="read-btn">Read!</button>
+                  </div>
+                  <div>Info: <span class="font-semibold" id="read"></span></div>
+              </div>
+              <div class="flex flex-col items-center space-y-4 bg-rose-300 p-8 rounded-lg w-1/2">
+                  <p class="text-xl font-semibold">Write Clause</p>
+                  <div class = "flex space-x-2">
+                      <input class="border border-gray-200 focus:outline-none p-2 rounded text-center w-24" placeholder="number" id="number-input">
+                      <input class="border border-gray-200 focus:outline-none p-2 rounded text-center w-88" placeholder="Enter your content here" id="write-input">
+                  </div>
+                  <button class="px-2 py-1 rounded bg-blue-400 hover:bg-blue-500 text-white" id="write-btn">Write</button>
+              </div>
+          </div>
+          <div class="flex">
+              <div class="flex flex-col items-center space-y-4 bg-rose-300 p-8 rounded-lg w-1/2">
+                  <p class="text-xl font-semibold">Set Name</p>
+                  <input class="border border-gray-200 focus:outline-none p-2 rounded text-center" placeholder="Set Name" id="setName-input">
+                  <button class="px-2 py-1 rounded bg-blue-400 hover:bg-blue-500 text-white" id="setName-btn">Set Name</button>
+              </div>
 
-          <div class="flex flex-col items-center space-y-4 bg-rose-300 p-8 rounded-lg w-full">
-              <p class="text-xl font-semibold">Select Paragraph(1-20)</p>
-              <input class="border border-gray-200 focus:outline-none p-2 rounded text-center" placeholder="Select which paragraph" id="number-input">
+              <div class="flex flex-col items-center space-y-4 bg-rose-300 p-8 rounded-lg w-1/2">
+                  <p class="text-xl font-semibold">Set New Editor</p>
+                  <input class="border border-gray-200 focus:outline-none p-2 rounded text-center" placeholder="Set New Editor" id="setEditor-input">
+                  <button class="px-2 py-1 rounded bg-blue-400 hover:bg-blue-500 text-white" id="setEditor-btn">Set New Editor</button>
+              </div>
           </div>
-          <div class="flex flex-col items-center space-y-4 bg-rose-300 p-8 rounded-lg w-full">
-            <p class="text-xl font-semibold">Write Paragraph</p>
-            <input class="border border-gray-200 focus:outline-none p-2 rounded text-center" placeholder="Enter your content here" id="write-input">
-            <button class="px-2 py-1 rounded bg-blue-400 hover:bg-blue-500 text-white" id="write-btn">Write</button>
-          </div>
-          <!----
-          <div class="flex flex-col items-center space-y-4 bg-rose-300 p-8 rounded-lg w-full" style="height: 550px;">
+          <div class="hidden flex flex-col items-center space-y-4 bg-rose-300 p-8 rounded-lg w-full" style="height: 550px;">
             <p class="text-xl font-semibold">Proposal</p>
             <button class="px-2 py-1 rounded bg-blue-400 hover:bg-blue-500 text-white" id="reload-btn">Reload</button>
             <div>Current Proposal Index(100 means no proposals): <span class="font-semibold" id="currentIndex"></span></div>
@@ -50,44 +84,10 @@
             <button class="px-2 py-1 rounded bg-blue-400 hover:bg-blue-500 text-white" id="yes-btn">Vote Yes</button>
             <button class="px-2 py-1 rounded bg-blue-400 hover:bg-blue-500 text-white" id="no-btn">Vote No</button>
           </div>
-          ---->
-          <div class="flex flex-col items-center space-y-4 bg-emerald-300 p-8 rounded-lg w-full">
-            <p class="text-xl font-semibold">Read</p>
-            <button class="px-2 py-1 rounded bg-blue-400 hover:bg-blue-500 text-white" id="read-btn">Read the Paragraphs</button>
-            <div>Current Information: <span class="font-semibold" id="read"></span></div>
-          </div>
-          <div class="flex flex-col items-center space-y-4 bg-rose-300 p-8 rounded-lg w-full">
-              <p class="text-xl font-semibold">Set Name</p>
-              <input class="border border-gray-200 focus:outline-none p-2 rounded text-center" placeholder="Set Name" id="setName-input">
-              <button class="px-2 py-1 rounded bg-blue-400 hover:bg-blue-500 text-white" id="setName-btn">Set Name</button>
-          </div>
-
-          <div class="flex flex-col items-center space-y-4 bg-rose-300 p-8 rounded-lg w-full">
-              <p class="text-xl font-semibold">Set New Editor</p>
-              <input class="border border-gray-200 focus:outline-none p-2 rounded text-center" placeholder="Set New Editor" id="setEditor-input">
-              <button class="px-2 py-1 rounded bg-blue-400 hover:bg-blue-500 text-white" id="setEditor-btn">Set New Editor</button>
-          </div>
-          <div class="flex flex-col items-center space-y-4 bg-emerald-300 p-8 rounded-lg w-full">
-              <p class="text-xl font-semibold">Get Name</p>
-              <button class="px-2 py-1 rounded bg-blue-400 hover:bg-blue-500 text-white" id="getName-btn">Get Name</button>
-              <div>Current name: <span class="font-semibold" id="getName"></span></div>
-          </div>
-          <div class="flex flex-col items-center space-y-4 bg-emerald-300 p-8 rounded-lg w-full">
-            <p class="text-xl font-semibold">Get Description</p>
-            <button class="px-2 py-1 rounded bg-blue-400 hover:bg-blue-500 text-white" id="getDes-btn">Get!</button>
-            <div>Current Description: <span class="font-semibold" id="getDes"></span></div>
-        </div>
-
-          <div class="flex flex-col items-center space-y-4 bg-emerald-300 p-8 rounded-lg w-full">
-              <p class="text-xl font-semibold">Editors</p>
-              <button class="px-2 py-1 rounded bg-blue-400 hover:bg-blue-500 text-white" id="getEditor-btn">Is Editor?</button>
-              <div>Editor true/false?: <span class="font-semibold" id="getEditor"></span></div>
-          </div>
-
-          <div class="flex flex-col items-center space-y-4 bg-blue-300 p-8 rounded-lg w-full">
+          <div class="flex flex-col items-center space-y-4 bg-blue-300 p-8 rounded-lg w-256">
               <p class="text-xl font-semibold">Create</p>
-              <button class="px-2 py-1 rounded bg-blue-400 hover:bg-blue-500 text-white" id="create-btn">Create(do not keep calling this)</button>
-              <div>The contract number is : <span class="font-semibold" id="contract-number"></span></div>
+              <button class="px-2 py-1 rounded bg-blue-400 hover:bg-blue-500 text-white" id="create-btn">Create</button>
+              <div>TransactionID: <span class="font-semibold" id="contract-number"></span></div>
           </div>
 
       </div>
