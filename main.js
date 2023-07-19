@@ -79,50 +79,40 @@ setNamebtn.onclick = async () => {
 var setEditorbtn = document.querySelector('#setEditor-btn');
 
 setEditorbtn.onclick = async () => {
-    if (userlogin) {
-        const tempAddress = document.querySelector('#setEditor-input').value
-        if (tempAddress.length > 0) {
-            const setEditorABI = ABICombined[currentType].find(({ name }) => name === 'addAuthorizedAddress');
+    const tempAddress = document.querySelector('#setEditor-input').value
+    if (tempAddress.length > 0) {
+        const setEditorABI = ABICombined[currentType].find(({ name }) => name === 'addAuthorizedAddress');
 
-            const clause = connex.thor.account(contract[currentType]).method(setEditorABI).asClause(tempAddress);
-            const result = await connex.vendor.sign("tx", [clause]).comment("setting editor").request();
-            alert("transaction done: ", result.txid);
+        const clause = connex.thor.account(contract[currentType]).method(setEditorABI).asClause(tempAddress);
+        const result = await connex.vendor.sign("tx", [clause]).comment("setting editor").request();
+        alert("transaction done: ", result.txid);
 
-        }
-        else {
-            alert("Please put in a address");
-        }
     }
     else {
-        alert("User not logged in");
+        alert("Please put in a address");
     }
 }
 
 var writebtn = document.querySelector('#write-btn');
 
 writebtn.onclick = async () => {
-    if (userlogin) {
-        const tempInfo = document.querySelector('#write-input').value
-        const tempNumber = document.querySelector('#number-input').value
-        if (tempInfo.length > 0) {
-            if(tempNumber.length > 0){
-                const writeABI = ABICombined[currentType].find(({ name }) => name === 'store');
+    const tempInfo = document.querySelector('#write-input').value
+    const tempNumber = document.querySelector('#number-input').value
+    if (tempInfo.length > 0) {
+        if(tempNumber.length > 0){
+            const writeABI = ABICombined[currentType].find(({ name }) => name === 'store');
 
-                const clause = connex.thor.account(contract[currentType]).method(writeABI).asClause(tempNumber, tempInfo);
-                const result = await connex.vendor.sign("tx", [clause]).comment("writing info").request();
-                alert("transaction done: ", result.txid);
-            }
-            else{
-              alert("Enter the Paragraph number")
-            }
+            const clause = connex.thor.account(contract[currentType]).method(writeABI).asClause(tempNumber, tempInfo);
+            const result = await connex.vendor.sign("tx", [clause]).comment("writing info").request();
+            alert("transaction done: ", result.txid);
+        }
+        else{
+            alert("Enter the Paragraph number")
+        }
 
-        }
-        else {
-            alert("Write something into the paragraph");
-        }
     }
     else {
-        alert("User not logged in");
+        alert("Write something into the paragraph");
     }
 }
 
