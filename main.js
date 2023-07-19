@@ -345,7 +345,9 @@ getEditorbtn.onclick = async () => {
 var createbtn = document.querySelector('#create-btn');
 
 createbtn.onclick = async () => {
-    const strings = ["this is the name", "this is the description"];
+    const tempNewName = document.querySelector('#name-input').value
+    const tempNewDescription = document.querySelector('#desc-input').value
+    const strings = [tempNewName, tempNewDescription];
     const encodedStrings = encode(strings);
     const finalByteCode = byteCodes[currentType] + encodedStrings;
     console.log(finalByteCode);
@@ -356,7 +358,7 @@ createbtn.onclick = async () => {
         .comment('Deploy contract type:' + currentType)
         .request()
     if(resp){
-        contractNum.innerHTML = `<a href="https://explore-testnet.vechain.org/accounts/${resp.txid}" target="_blank">${resp.txid}</a>`;
+        contractNum.innerHTML = '<a href="https://explore-testnet.vechain.org/transactions/' + resp.txid + '#info" target="_blank">' + resp.txid + '</a>';
     }
     else{
         contractNum.innerHTML = 'failed to get';
