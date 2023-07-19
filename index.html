@@ -11,6 +11,12 @@
 
 <body>
   <p class="text-3xl mt-8 text-center text-green-500">Contract testing</p>
+  <br>
+  <div class = "flex space-x-2 justify-center">
+    <button class="px-2 py-1 rounded bg-blue-300 hover:bg-blue-200 text-black" id="type1-btn">Type1</button>
+    <button class="px-2 py-1 rounded bg-blue-300 hover:bg-blue-200 text-black" id="type2-btn">Type2</button>
+    <button class="px-2 py-1 rounded bg-blue-300 hover:bg-blue-200 text-black" id="type3-btn">Type3</button>
+  </div>
   <div class="main" id="dapp-body">
 
       <div class="flex justify-center my-4">User address: 0x74DA1548fDc9Af05869193e775340192478a6365  ////////// Password: Password</div>
@@ -70,7 +76,7 @@
                   <button class="px-2 py-1 rounded bg-blue-400 hover:bg-blue-500 text-white" id="setEditor-btn">Set New Editor</button>
               </div>
           </div>
-          <div class="hidden flex flex-col items-center space-y-4 bg-rose-300 p-8 rounded-lg w-full" style="height: 550px;">
+          <div id="voting" class="hidden flex flex-col items-center space-y-4 bg-rose-300 p-8 rounded-lg w-256" style="height: 550px;">
             <p class="text-xl font-semibold">Proposal</p>
             <button class="px-2 py-1 rounded bg-blue-400 hover:bg-blue-500 text-white" id="reload-btn">Reload</button>
             <div>Current Proposal Index(100 means no proposals): <span class="font-semibold" id="currentIndex"></span></div>
@@ -79,7 +85,7 @@
             <div>Current Votes: <span class="font-semibold" id="currentIndex"></span></div>
             <div>Yes Votes: <span class="font-semibold" id="yesVotes"></span></div>
             <div>No Votes: <span class="font-semibold" id="noVotes"></span></div>
-            <div>Required Votes: <span class="font-semibold" id="requiredVotes"></span></div>
+            <div>Voter: <span class="font-semibold" id="requiredVotes"></span></div>
             <div>Have you voted? <span class="font-semibold" id="checkVoted"></span></div>
             <button class="px-2 py-1 rounded bg-blue-400 hover:bg-blue-500 text-white" id="yes-btn">Vote Yes</button>
             <button class="px-2 py-1 rounded bg-blue-400 hover:bg-blue-500 text-white" id="no-btn">Vote No</button>

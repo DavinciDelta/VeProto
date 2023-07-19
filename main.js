@@ -1,5 +1,4 @@
-import { ABI1, byteCode1} from './abi1'
-const contract = '0x3628b733E9A6b07b86B602Cd2CE73d9E16075E9E'
+import { ABICombined, byteCodes, contract } from './abicombined';
 
 const connex = new Connex({
   node: 'https://vethor-node-test.vechaindev.com',
@@ -7,6 +6,24 @@ const connex = new Connex({
 })
 
 const useraddress = "0x74DA1548fDc9Af05869193e775340192478a6365"
+
+let currentType = 1;
+
+document.getElementById('type1-btn').addEventListener('click', () => {
+    document.getElementById("voting").classList.remove("hidden");
+    document.getElementById("voting").classList.add("hidden");
+    currentType = 1;
+});
+
+document.getElementById('type2-btn').addEventListener('click', () => {
+    document.getElementById("voting").classList.remove("hidden");
+    currentType = 2;
+});
+
+document.getElementById('type3-btn').addEventListener('click', () => {
+    document.getElementById("voting").classList.remove("hidden");
+    currentType = 3;
+});
 
 function toHex(input) {
     let hex = '';
@@ -43,9 +60,9 @@ setNamebtn.onclick = async () => {
     if (userlogin) {
         const tempName = document.querySelector('#setName-input').value
         if (tempName.length > 0) {
-            const setNameABI = ABI1.find(({ name }) => name === 'changeName');
+            const setNameABI = ABICombined[currentType].find(({ name }) => name === 'changeName');
 
-            const clause = connex.thor.account(contract).method(setNameABI).asClause(tempName);
+            const clause = connex.thor.account(contract[currentType]).method(setNameABI).asClause(tempName);
             const result = await connex.vendor.sign("tx", [clause]).comment("setting name").request();
             alert("transaction done: ", result.txid);
 
@@ -65,9 +82,9 @@ setEditorbtn.onclick = async () => {
     if (userlogin) {
         const tempAddress = document.querySelector('#setEditor-input').value
         if (tempAddress.length > 0) {
-            const setEditorABI = ABI1.find(({ name }) => name === 'addAuthorizedAddress');
+            const setEditorABI = ABICombined[currentType].find(({ name }) => name === 'addAuthorizedAddress');
 
-            const clause = connex.thor.account(contract).method(setEditorABI).asClause(tempAddress);
+            const clause = connex.thor.account(contract[currentType]).method(setEditorABI).asClause(tempAddress);
             const result = await connex.vendor.sign("tx", [clause]).comment("setting editor").request();
             alert("transaction done: ", result.txid);
 
@@ -89,9 +106,9 @@ writebtn.onclick = async () => {
         const tempNumber = document.querySelector('#number-input').value
         if (tempInfo.length > 0) {
             if(tempNumber.length > 0){
-                const writeABI = ABI1.find(({ name }) => name === 'store');
+                const writeABI = ABICombined[currentType].find(({ name }) => name === 'store');
 
-                const clause = connex.thor.account(contract).method(writeABI).asClause(tempNumber, tempInfo);
+                const clause = connex.thor.account(contract[currentType]).method(writeABI).asClause(tempNumber, tempInfo);
                 const result = await connex.vendor.sign("tx", [clause]).comment("writing info").request();
                 alert("transaction done: ", result.txid);
             }
@@ -108,7 +125,7 @@ writebtn.onclick = async () => {
         alert("User not logged in");
     }
 }
-/*
+
 var reloadbtn = document.querySelector('#reload-btn');
 
 reloadbtn.onclick = async () => {
@@ -121,22 +138,22 @@ reloadbtn.onclick = async () => {
     const checkVoted = document.querySelector('#checkVoted');
     
 
-    const indexABI = ABI.find(({ name }) => name === "getProposalIndex");
-    const contentABI = ABI.find(({ name }) => name === "getProposal");
-    const proposerABI = ABI.find(({ name }) => name === "getProposer");
-    const yesABI = ABI.find(({ name }) => name === "getForVotes");
-    const noABI = ABI.find(({ name }) => name === "getNoVotes");
-    const requiredABI = ABI.find(({ name }) => name === "getRequiredVotes");
-    const checkVotedABI = ABI.find(({ name }) => name === "hasVoted");
+    const indexABI = ABICombined[currentType].find(({ name }) => name === "getProposalIndex");
+    const contentABI = ABICombined[currentType].find(({ name }) => name === "getProposal");
+    const proposerABI = ABICombined[currentType].find(({ name }) => name === "getProposer");
+    const yesABI = ABICombined[currentType].find(({ name }) => name === "getForVotes");
+    const noABI = ABICombined[currentType].find(({ name }) => name === "getNoVotes");
+    const requiredABI = ABICombined[currentType].find(({ name }) => name === "getRequiredVotes");
+    const checkVotedABI = ABICombined[currentType].find(({ name }) => name === "hasVoted");
     currentIndex.innerHTML = 'reading';
 
-    const result1 = await connex.thor.account(contract).method(indexABI).call();
-    const result2 = await connex.thor.account(contract).method(contentABI).call();
-    const result3 = await connex.thor.account(contract).method(proposerABI).call();
-    const yesResult = await connex.thor.account(contract).method(yesABI).call();
-    const noResult = await connex.thor.account(contract).method(noABI).call();
-    const reqResult = await connex.thor.account(contract).method(requiredABI).call();
-    const checkVoteResult = await connex.thor.account(contract).method(checkVotedABI).call(useraddress);
+    const result1 = await connex.thor.account(contract[currentType]).method(indexABI).call();
+    const result2 = await connex.thor.account(contract[currentType]).method(contentABI).call();
+    const result3 = await connex.thor.account(contract[currentType]).method(proposerABI).call();
+    const yesResult = await connex.thor.account(contract[currentType]).method(yesABI).call();
+    const noResult = await connex.thor.account(contract[currentType]).method(noABI).call();
+    const reqResult = await connex.thor.account(contract[currentType]).method(requiredABI).call();
+    const checkVoteResult = await connex.thor.account(contract[currentType]).method(checkVotedABI).call(useraddress);
 
     if (result1) {
         currentIndex.innerHTML = result1.decoded[0];
@@ -193,12 +210,12 @@ yesbtn.onclick = async () => {
 
     current.innerHTML = 'updating';
 
-    const result = await connex.thor.account(contract).method(voteYesABI).call();
+    const result = await connex.thor.account(contract[currentType]).method(voteYesABI).call();
 
     if (result) {
       current.innerHTML = 'vote successful';
       const yesABI = ABI.find(({ name }) => name === "getForVotes");
-      const yesResult = await connex.thor.account(contract).method(yesABI).call();
+      const yesResult = await connex.thor.account(contract[currentType]).method(yesABI).call();
       if (yesResult) {
         current.innerHTML = yesResult.decoded[0];
       }
@@ -216,12 +233,12 @@ nobtn.onclick = async () => {
 
     current.innerHTML = 'updating';
 
-    const result = await connex.thor.account(contract).method(voteNoABI).call();
+    const result = await connex.thor.account(contract[currentType]).method(voteNoABI).call();
 
     if (result) {
       current.innerHTML = 'vote successful';
       const noABI = ABI.find(({ name }) => name === "getNoVotes");
-      const noResult = await connex.thor.account(contract).method(noABI).call();
+      const noResult = await connex.thor.account(contract[currentType]).method(noABI).call();
       if (noResult) {
           current.innerHTML = noResult.decoded[0];
       }
@@ -230,16 +247,16 @@ nobtn.onclick = async () => {
       current.innerHTML = 'failed to get';
     }
 }
-*/
+
 var getNamebtn = document.querySelector('#getName-btn');
 
 getNamebtn.onclick = async () => {
     const current = document.querySelector('#getName');
-    const getNameABI = ABI1.find(({ name }) => name === "getName");
+    const getNameABI = ABICombined[currentType].find(({ name }) => name === "getName");
 
     current.innerHTML = 'reading';
 
-    const result = await connex.thor.account(contract).method(getNameABI).call();
+    const result = await connex.thor.account(contract[currentType]).method(getNameABI).call();
 
     if (result) {
       current.innerHTML = result.decoded[0];
@@ -253,11 +270,11 @@ var getTypebtn = document.querySelector('#getType-btn');
 
 getTypebtn.onclick = async () => {
     const current = document.querySelector('#getType');
-    const getTypeABI = ABI1.find(({ name }) => name === "getContractType");
+    const getTypeABI = ABICombined[currentType].find(({ name }) => name === "getContractType");
 
     current.innerHTML = 'reading';
 
-    const result = await connex.thor.account(contract).method(getTypeABI).call();
+    const result = await connex.thor.account(contract[currentType]).method(getTypeABI).call();
 
     if (result) {
       current.innerHTML = result.decoded[0];
@@ -271,11 +288,11 @@ var getDesbtn = document.querySelector('#getDes-btn');
 
 getDesbtn.onclick = async () => {
     const current = document.querySelector('#getDes');
-    const getDesABI = ABI1.find(({ name }) => name === "getDescription");
+    const getDesABI = ABICombined[currentType].find(({ name }) => name === "getDescription");
 
     current.innerHTML = 'reading';
 
-    const result = await connex.thor.account(contract).method(getDesABI).call();
+    const result = await connex.thor.account(contract[currentType]).method(getDesABI).call();
 
     if (result) {
       current.innerHTML = result.decoded[0];
@@ -289,12 +306,12 @@ var readbtn = document.querySelector('#read-btn');
 
 readbtn.onclick = async () => {
     const current = document.querySelector('#read');
-    const readABI = ABI1.find(({ name }) => name === "retrieve");
+    const readABI = ABICombined[currentType].find(({ name }) => name === "retrieve");
 
     current.innerHTML = 'reading';
 
-    const result = await connex.thor.account(contract).method(readABI).call(0);
-    const result2 = await connex.thor.account(contract).method(readABI).call(1);
+    const result = await connex.thor.account(contract[currentType]).method(readABI).call(0);
+    const result2 = await connex.thor.account(contract[currentType]).method(readABI).call(1);
     if (result) {
         current.innerHTML = result.decoded[0];
         if(result2){
@@ -311,11 +328,11 @@ var getEditorbtn = document.querySelector('#getEditor-btn');
 
 getEditorbtn.onclick = async () => {
     const current = document.querySelector('#getEditor');
-    const getEditorABI = ABI1.find(({ name }) => name === "isAuthorized");
+    const getEditorABI = ABICombined[1].find(({ name }) => name === "isAuthorized");
 
     current.innerHTML = 'reading';
 
-    const result = await connex.thor.account(contract).method(getEditorABI).call(useraddress);
+    const result = await connex.thor.account(contract[currentType]).method(getEditorABI).call(useraddress);
 
     if (result) {
       current.innerHTML = result.decoded[0];
@@ -328,24 +345,20 @@ getEditorbtn.onclick = async () => {
 var createbtn = document.querySelector('#create-btn');
 
 createbtn.onclick = async () => {
-    if (userlogin) {
-        const strings = ["this is the name", "this is the description"];
-        const encodedStrings = encode(strings);
-        const finalByteCode = byteCode1 + encodedStrings;
-        const contractNum = document.querySelector('#contract-number');
-        contractNum.innerHTML = 'processing'
-        const resp = await connex.vendor
-            .sign('tx', [{ value: 0, data: finalByteCode, to: null}])
-            .comment('Deploy contract')
-            .request()
-        if(resp){
-          contractNum.innerHTML = resp.txid;
-        }
-        else{
-          contractNum.innerHTML = 'failed to get';
-        }
+    const strings = ["this is the name", "this is the description"];
+    const encodedStrings = encode(strings);
+    const finalByteCode = byteCodes[currentType] + encodedStrings;
+    console.log(finalByteCode);
+    const contractNum = document.querySelector('#contract-number');
+    contractNum.innerHTML = 'processing'
+    const resp = await connex.vendor
+        .sign('tx', [{ value: 0, data: finalByteCode, to: null}])
+        .comment('Deploy contract type:' + currentType)
+        .request()
+    if(resp){
+        contractNum.innerHTML = `<a href="https://explore-testnet.vechain.org/accounts/${resp.txid}" target="_blank">${resp.txid}</a>`;
     }
-    else {
-        alert("User not logged in");
+    else{
+        contractNum.innerHTML = 'failed to get';
     }
 }
