@@ -197,10 +197,9 @@ var yesbtn = document.querySelector('#yes-btn');
 yesbtn.onclick = async () => {
     const current = document.querySelector('#yesVotes');
     const voteYesABI = ABICombined[currentType].find(({ name }) => name === "voteFor");
-
+    const clause = connex.thor.account(contract[currentType]).method(voteYesABI).asClause();
     current.innerHTML = 'updating';
-
-    const result = await connex.thor.account(contract[currentType]).method(voteYesABI).call();
+    const result = await connex.vendor.sign("tx", [clause]).comment("voting yes for this proposal").request();
 
     if (result) {
       current.innerHTML = 'vote successful';
@@ -221,9 +220,9 @@ nobtn.onclick = async () => {
     const current = document.querySelector('#noVotes');
     const voteNoABI = ABICombined[currentType].find(({ name }) => name === "voteNo");
 
+    const clause = connex.thor.account(contract[currentType]).method(voteNoABI).asClause();
     current.innerHTML = 'updating';
-
-    const result = await connex.thor.account(contract[currentType]).method(voteNoABI).call();
+    const result = await connex.vendor.sign("tx", [clause]).comment("voting no for this proposal").request();
 
     if (result) {
       current.innerHTML = 'vote successful';
