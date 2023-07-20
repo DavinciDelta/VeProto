@@ -196,7 +196,7 @@ var yesbtn = document.querySelector('#yes-btn');
 
 yesbtn.onclick = async () => {
     const current = document.querySelector('#yesVotes');
-    const voteYesABI = ABI.find(({ name }) => name === "voteFor");
+    const voteYesABI = ABICombined[currentType].find(({ name }) => name === "voteFor");
 
     current.innerHTML = 'updating';
 
@@ -204,7 +204,7 @@ yesbtn.onclick = async () => {
 
     if (result) {
       current.innerHTML = 'vote successful';
-      const yesABI = ABI.find(({ name }) => name === "getForVotes");
+      const yesABI = ABICombined[currentType].find(({ name }) => name === "getForVotes");
       const yesResult = await connex.thor.account(contract[currentType]).method(yesABI).call();
       if (yesResult) {
         current.innerHTML = yesResult.decoded[0];
@@ -219,7 +219,7 @@ var nobtn = document.querySelector('#no-btn');
 
 nobtn.onclick = async () => {
     const current = document.querySelector('#noVotes');
-    const voteNoABI = ABI.find(({ name }) => name === "voteNo");
+    const voteNoABI = ABICombined[currentType].find(({ name }) => name === "voteNo");
 
     current.innerHTML = 'updating';
 
@@ -227,7 +227,7 @@ nobtn.onclick = async () => {
 
     if (result) {
       current.innerHTML = 'vote successful';
-      const noABI = ABI.find(({ name }) => name === "getNoVotes");
+      const noABI = ABICombined[currentType].find(({ name }) => name === "getNoVotes");
       const noResult = await connex.thor.account(contract[currentType]).method(noABI).call();
       if (noResult) {
           current.innerHTML = noResult.decoded[0];
