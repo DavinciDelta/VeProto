@@ -57,22 +57,17 @@ function encode(strings) {
 var setNamebtn = document.querySelector('#setName-btn');
 
 setNamebtn.onclick = async () => {
-    if (userlogin) {
-        const tempName = document.querySelector('#setName-input').value
-        if (tempName.length > 0) {
-            const setNameABI = ABICombined[currentType].find(({ name }) => name === 'changeName');
+    const tempName = document.querySelector('#setName-input').value
+    if (tempName.length > 0) {
+        const setNameABI = ABICombined[currentType].find(({ name }) => name === 'changeName');
 
-            const clause = connex.thor.account(contract[currentType]).method(setNameABI).asClause(tempName);
-            const result = await connex.vendor.sign("tx", [clause]).comment("setting name").request();
-            alert("transaction done: ", result.txid);
+        const clause = connex.thor.account(contract[currentType]).method(setNameABI).asClause(tempName);
+        const result = await connex.vendor.sign("tx", [clause]).comment("setting name").request();
+        alert("transaction done: ", result.txid);
 
-        }
-        else {
-            alert("Please put in a name");
-        }
     }
     else {
-        alert("User not logged in");
+        alert("Please put in a name");
     }
 }
 
