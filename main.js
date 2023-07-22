@@ -295,20 +295,21 @@ var readbtn = document.querySelector('#read-btn');
 
 readbtn.onclick = async () => {
     const current = document.querySelector('#read');
+    const readNumber = document.querySelector('#read-input').value
     const readABI = ABICombined[currentType].find(({ name }) => name === "retrieve");
 
     current.innerHTML = 'reading';
-
-    const result = await connex.thor.account(contract[currentType]).method(readABI).call(0);
-    const result2 = await connex.thor.account(contract[currentType]).method(readABI).call(1);
-    if (result) {
-        current.innerHTML = result.decoded[0];
-        if(result2){
-          current.innerHTML += "<br/>" + result2.decoded[0];
+    if(readNumber){
+        const result = await connex.thor.account(contract[currentType]).method(readABI).call(readNumber);
+        if (result) {
+            current.innerHTML = result.decoded[0];
+        }
+        else{
+            current.innerHTML = "failed to get";
         }
     }
     else{
-        current.innerHTML = "failed to get";
+        alert("Enter the a number")
     }
     
 }
